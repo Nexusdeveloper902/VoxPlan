@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import multer from 'multer';
 import fs from 'fs';
 import { supabase } from '../supabase';
@@ -13,7 +13,7 @@ const upload = multer({ dest: UPLOADS_DIR });
 // In express-jwt v8, the decoded token payload is in req.auth
 const getUserId = (req: any) => req.auth?.sub;
 
-router.get('/', checkJwt, async (req: any, res) => {
+router.get('/', checkJwt, async (req: any, res: Response) => {
   const userId = getUserId(req);
   if (!userId) return res.status(401).json({ error: 'No autorizado' });
 
@@ -27,7 +27,7 @@ router.get('/', checkJwt, async (req: any, res) => {
   res.json(data);
 });
 
-router.post('/record', checkJwt, upload.single('audio'), async (req: any, res) => {
+router.post('/record', checkJwt, upload.single('audio'), async (req: any, res: Response) => {
   try {
     const userId = getUserId(req);
     if (!userId) return res.status(401).json({ error: 'No autorizado' });
@@ -78,7 +78,7 @@ router.post('/record', checkJwt, upload.single('audio'), async (req: any, res) =
   }
 });
 
-router.post('/:id/planify', checkJwt, async (req: any, res) => {
+router.post('/:id/planify', checkJwt, async (req: any, res: Response) => {
   try {
     const taskId = req.params.id;
     const userId = getUserId(req);
@@ -119,7 +119,7 @@ router.post('/:id/planify', checkJwt, async (req: any, res) => {
   }
 });
 
-router.patch('/steps/:id', checkJwt, async (req: any, res) => {
+router.patch('/steps/:id', checkJwt, async (req: any, res: Response) => {
   try {
     const stepId = req.params.id;
     const { status } = req.body; // 'pending' or 'done'
@@ -161,7 +161,7 @@ router.patch('/steps/:id', checkJwt, async (req: any, res) => {
   }
 });
 
-router.get('/:id/steps', checkJwt, async (req: any, res) => {
+router.get('/:id/steps', checkJwt, async (req: any, res: Response) => {
   const taskId = req.params.id;
   const { data, error } = await supabase
     .from('task_steps')
@@ -173,7 +173,7 @@ router.get('/:id/steps', checkJwt, async (req: any, res) => {
   res.json(data);
 });
 
-router.delete('/:id', checkJwt, async (req: any, res) => {
+router.delete('/:id', checkJwt, async (req: any, res: Response) => {
   try {
     const taskId = req.params.id;
     const userId = getUserId(req);
