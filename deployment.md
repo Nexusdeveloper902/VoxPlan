@@ -50,12 +50,30 @@ This guide describes how to deploy the VoxPlan application (Backend and Frontend
 4. **Environment Variables**: Create an `.env` file in the `frontend` folder with the production URLs.
    - `EXPO_PUBLIC_API_URL=https://your-backend-url.onrender.com/api`
 5. **Build**:
-   - For Android: `eas build --platform android`
+   - For Play Store (AAB): `eas build --platform android`
+   - **For Direct Install (APK)**: `eas build --platform android --profile preview`
    - For iOS: `eas build --platform ios`
-6. **Submit**: After build finish, follow the prompt to submit to the Play Store or App Store.
 
----
+> [!TIP]
+> **Installing on your phone**: To install the app directly on your Android phone without the Play Store, use the `--profile preview` flag. This will generate an `.apk` file that you can download and install directly.
 
-## 5. Post-Deployment Verification
+## 5. EAS Configuration for APKs
+
+To use the `preview` profile, ensure your `eas.json` (in the `frontend` folder) has a preview profile configured for APKs:
+
+```json
+{
+  "build": {
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {}
+  }
+}
+```
+
+## 6. Post-Deployment Verification
 - Test the `/health` endpoint of your backend.
 - Log in to the app and verify that task recording and planification still work with the production backend.
