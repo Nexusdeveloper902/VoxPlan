@@ -35,8 +35,8 @@ This guide describes how to deploy the VoxPlan application (Backend and Frontend
 
 1. **Tenant Setup**: Use the domain and client ID from your Auth0 dashboard.
 2. **Update URLs**:
-   - **Allowed Callback URLs**: `https://auth.expo.io/@your-expo-username/voxplan`
-   - **Allowed Logout URLs**: `https://auth.expo.io/@your-expo-username/voxplan`
+   - **Allowed Callback URLs**: `voxplan://authorize`
+   - **Allowed Logout URLs**: `voxplan://authorize`
    - **Allowed Web Origins**: `https://your-backend-url.com`
 
 ---

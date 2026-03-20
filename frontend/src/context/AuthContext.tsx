@@ -26,7 +26,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const redirectUri = AuthSession.makeRedirectUri();
+  const redirectUri = AuthSession.makeRedirectUri({
+    scheme: 'voxplan',
+    path: 'authorize',
+  });
   console.log('Redirect URI (Add this to Auth0 Allowed Callbacks):', redirectUri);
 
   const [request, response, promptAsync] = AuthSession.useAuthRequest(
