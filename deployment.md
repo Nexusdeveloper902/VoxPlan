@@ -57,22 +57,20 @@ This guide describes how to deploy the VoxPlan application (Backend and Frontend
 > [!TIP]
 > **Installing on your phone**: To install the app directly on your Android phone without the Play Store, use the `--profile preview` flag. This will generate an `.apk` file that you can download and install directly.
 
-## 5. EAS Configuration for APKs
+## 5. EAS Configuration & Secrets
 
-To use the `preview` profile, ensure your `eas.json` (in the `frontend` folder) has a preview profile configured for APKs:
+I've added your environment variables to `eas.json` for convenience, but for better security, you should use **EAS Secrets**:
 
-```json
-{
-  "build": {
-    "preview": {
-      "android": {
-        "buildType": "apk"
-      }
-    },
-    "production": {}
-  }
-}
-```
+1. Go to your [Expo Dashboard](https://expo.dev/).
+2. Navigate to your project -> **Settings** -> **Secrets**.
+3. Add your `EXPO_PUBLIC_` variables there.
+4. You can then remove them from `eas.json` to keep your repository clean.
+
+> [!IMPORTANT]
+> **Rebuild required**: After any change to `app.json`, `eas.json`, or Secrets, you **must** run a new build:
+> ```bash
+> eas build --platform android --profile preview
+> ```
 
 ## 6. Post-Deployment Verification
 - Test the `/health` endpoint of your backend.
